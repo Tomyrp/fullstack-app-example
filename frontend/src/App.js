@@ -7,13 +7,14 @@ function App() {
   const [projectData, setProjectData] = useState(null);
 
   // useEffect is a React hook that runs side effects, such as fetching data
-  useEffect(() => {
-    // Fetch data from the backend API endpoint
-    fetch('https://fullstack-app-example-production.up.railway.app/api/project
-')
-      .then((response) => response.json()) // Convert the API response to JSON
-      .then((data) => setProjectData(data)); // Update the state with the fetched data
-  }, []); // Empty dependency array ensures this runs only once after the component mounts
+useEffect(() => {
+  fetch('https://fullstack-app-example-production.up.railway.app/api/project')
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      setProject(data);
+    });
+}, []); // Empty dependency array ensures this runs only once after the component mounts
 
   // Render the UI
   return (
