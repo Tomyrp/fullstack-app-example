@@ -1,45 +1,47 @@
-// Import React and hooks for managing state and side effects
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function App() {
-  // Create a state variable `projectData` to store the project information
-  // `setProjectData` is used to update the value of `projectData`
+  // Estado para guardar la info del proyecto
   const [projectData, setProjectData] = useState(null);
 
-  // useEffect is a React hook that runs side effects, such as fetching data
-useEffect(() => {
-  fetch('https://fullstack-app-example-production.up.railway.app/api/project')
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      setProject(data);
-    });
-}, []); // Empty dependency array ensures this runs only once after the component mounts
+  useEffect(() => {
+    fetch("https://fullstack-app-example-production.up.railway.app/api/project")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setProjectData(data); // ✅ aquí va setProjectData
+      })
+      .catch((err) => console.error("Error fetching data:", err));
+  }, []);
 
-  // Render the UI
   return (
     <div className="App">
-      {/* Display the main heading */}
       <h1>Project Information</h1>
 
-      {/* Conditionally render content based on whether `projectData` has been fetched */}
       {projectData ? (
         <div>
-          {/* Display project details if `projectData` is available */}
           <h2>{projectData.projectName}</h2>
-          <p><strong>Student:</strong> {projectData.studentName}</p>
-          <p><strong>Description:</strong> {projectData.projectDescription}</p>
-          {/* Link to the project URL, opening in a new tab */}
-          <a href={projectData.projectUrl} target="_blank" rel="noopener noreferrer">
+          <p>
+            <strong>Student:</strong> {projectData.studentName}
+          </p>
+          <p>
+            <strong>Description:</strong> {projectData.projectDescription}
+          </p>
+
+          <a
+            href={projectData.projectUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             View Project
           </a>
         </div>
       ) : (
-        // Show a loading message while waiting for data to be fetched
-        <p>Loading...</p>
+        <p>Loading ...</p>
       )}
     </div>
   );
 }
 
 export default App;
+
